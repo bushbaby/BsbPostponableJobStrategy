@@ -57,4 +57,20 @@ trait PostponableJobTrait
 
         return count($postpone) - $count;
     }
+
+    /**
+     * Set metadata
+     *
+     * @param  string|int|array|\Traversable $spec
+     * @param  mixed $value
+     */
+    abstract function setMetadata($spec, $value = null);
+
+    /**
+     * Get metadata
+     *
+     * @param  null|string|int $key
+     * @return mixed
+     */
+    abstract function getMetadata($key = NULL, $default = NULL);
 }
