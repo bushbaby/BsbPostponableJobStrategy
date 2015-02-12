@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./test/Bootstrap.php" colors="true">
+
+    <testsuites>
+        <testsuite name="BsbPostponableJobStrategyTest">
+            <directory>test/src</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="./test/_build/logs/clover.xml"/>
+        <log type="coverage-html" target="./test/_build/coverage" charset="UTF-8"
+             yui="true" highlight="true" lowUpperBound="80" highLowerBound="90"/>
+    </logging>
+</phpunit>

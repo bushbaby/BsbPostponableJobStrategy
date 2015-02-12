@@ -1,0 +1,13 @@
+<?php
+
+return [
+    'modules' => [
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'SlmQueue',
+        'SlmQueueDoctrine',
+        'BsbPostponableJobStrategy',
+    ],
+    'module_listener_options' => [
+    ],
+];

@@ -1,0 +1,42 @@
+{
+    "name": "bushbaby/slmqueuedoctrine-postponablejobstrategy",
+    "description": "BsbPostponableJobStrategy is a strategy for the SlmQueueDoctrine ZF2 module that provides the ability for jobs to postpone their execution until other jobs have successfully been processed.",
+    "type": "library",
+    "keywords": ["zf2", "slm-queue", "module", "strategy"],
+    "homepage": "https://github.com/bushbaby/BsbPostponableJobStrategy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bas Kamer",
+            "homepage": "http://bushbaby.nl"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "slm/queue-doctrine": "~0.4"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "~2.0",
+        "zendframework/zend-modulemanager": "~2.0",
+        "zendframework/zend-loader": "~2.0",
+        "zendframework/zend-view": "~2.0",
+        "zendframework/zend-log": "~2.0",
+        "phpunit/phpunit": "~4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "BsbPostponableJobStrategy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BsbPostponableJobStrategyTest\\": "test/src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+
+}
