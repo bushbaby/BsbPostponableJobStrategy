@@ -72,5 +72,5 @@ trait PostponableJobTrait
      * @param  null|string|int $key
      * @return mixed
      */
-    abstract function getMetadata($key = NULL, $default = NULL);
+    abstract function getMetadata($key = null, $default = null);
 }
