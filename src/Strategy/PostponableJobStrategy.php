@@ -39,7 +39,7 @@ class PostponableJobStrategy extends AbstractStrategy
         $this->listeners[] = $events->attach(
             WorkerEvent::EVENT_PROCESS_JOB,
             [$this, 'onPostponeJobCheck'],
-            100
+            PHP_INT_MAX
         );
     }
 

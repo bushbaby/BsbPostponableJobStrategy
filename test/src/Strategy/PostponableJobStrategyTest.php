@@ -44,7 +44,7 @@ class PostponableJobStrategyTest extends PHPUnit_Framework_TestCase
         $evm = $this->getMock('Zend\EventManager\EventManagerInterface');
 
         $evm->expects($this->at(0))->method('attach')
-            ->with(WorkerEvent::EVENT_PROCESS_JOB, array($this->listener, 'onPostponeJobCheck'), 100);
+            ->with(WorkerEvent::EVENT_PROCESS_JOB, array($this->listener, 'onPostponeJobCheck'), PHP_INT_MAX);
 
         $this->listener->attach($evm);
     }
