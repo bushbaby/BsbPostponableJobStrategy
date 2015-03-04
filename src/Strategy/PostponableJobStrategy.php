@@ -8,7 +8,6 @@ use SlmQueue\Strategy\AbstractStrategy;
 use SlmQueue\Worker\WorkerEvent;
 use SlmQueueDoctrine\Queue\DoctrineQueue;
 use Zend\EventManager\EventManagerInterface;
-use Zend\Log\Logger;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class PostponableJobStrategy extends AbstractStrategy
