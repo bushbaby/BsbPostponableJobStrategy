@@ -74,6 +74,7 @@ class PostponableJobStrategy extends AbstractStrategy
             return;
         }
 
+        /** @var DoctrineQueue $queue */
         $queue        = $event->getQueue();
         $queueOptions = $queue->getOptions();
         /** @var \Doctrine\DBAL\Connection $connection */
@@ -92,6 +93,32 @@ class PostponableJobStrategy extends AbstractStrategy
 
             return $row['status'] != DoctrineQueue::STATUS_DELETED;
         });
+
+        // check for postponeUntil's that have been buried (failed by exception) fail this one too
+        $ok = null;
+        foreach ($postponeUntil as $key => $postponeUntilId) {
+            $sql = 'SELECT `status` FROM ' . $queueOptions->getTableName() . ' WHERE id = ?';
+            $row = $connection->fetchAssoc($sql, [$postponeUntilId], [Type::SMALLINT]);
+
+            // assume garbage collection has occured and job was processed successfully
+            if (!$row) {
+                continue;
+            }
+
+            $ok = $row['status'] != DoctrineQueue::STATUS_BURIED;
+
+            if ($ok === false) {
+                $queue->bury(
+                    $job,
+                    [
+                        'message' => sprintf('This postponed job has been buried because it depends on the execution ' .
+                            'of a job (%s) that has been buried', $postponeUntilId)
+                    ]
+                );
+                $event->stopPropagation();
+                return;
+            }
+        }
 
         if ($postponeUntil) {
             $postponeUntil = array_values($postponeUntil);
