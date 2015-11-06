@@ -17,10 +17,7 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2.0",
-        "zendframework/zend-modulemanager": "~2.0",
-        "zendframework/zend-loader": "~2.0",
-        "zendframework/zend-view": "~2.0",
-        "zendframework/zend-log": "~2.0",
+        "zendframework/zendframework": "~2.0",
         "phpunit/phpunit": "~4.1"
     },
     "autoload": {
