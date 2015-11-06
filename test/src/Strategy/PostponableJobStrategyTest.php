@@ -139,4 +139,47 @@ class PostponableJobStrategyTest extends PHPUnit_Framework_TestCase
 
         $this->listener->onPostponeJobCheck($eventMock);
     }
-}
+
+    public function dpRoutesThroughBuriedHandler()
+    {
+        // specs, row result set, results
+        return [
+            [[10], [['status' => 4]]],
+        ];
+    }
+    /**
+     * @dataProvider dpRoutesThroughBuriedHandler
+     */
+    public function testRoutesThroughBuriedHandler($postponeUntilSpec, $rowResultSets)
+    {
+        $eventMock = $this->getMockBuilder('SlmQueue\Worker\WorkerEvent')->disableOriginalConstructor()->getMock();
+        $queueMock = $this->getMockBuilder('SlmQueueDoctrine\Queue\DoctrineQueue')->disableOriginalConstructor()->getMock();
+        $smMock    = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $options   = new DoctrineOptions();
+        $connMock  = $this->getMockBuilder('Doctrine\DBAL\Connection')->disableOriginalConstructor()->getMock();
+        $jobMock   = $this->getMock('BsbPostponableJobStrategyTest\Asset\PostponableJob');
+
+        $jobMock->expects($this->at(0))->method('getMetadata')->with('__postponeUntil')->willReturn($postponeUntilSpec);
+
+
+        $this->listener = new \BsbPostponableJobStrategyTest\Asset\PostponableJobStrategy($smMock);
+
+        $eventMock->expects($this->at(0))->method('getJob')->will($this->returnValue($jobMock));
+        $eventMock->expects($this->once())->method('getQueue')->will($this->returnValue($queueMock));
+        $queueMock->expects($this->once())->method('getOptions')->willReturn($options);
+
+        $smMock->expects($this->once())->method('get')->with('doctrine.connection.orm_default')->willReturn($connMock);
+
+        foreach($rowResultSets as $index=>$rowResultSet) {
+            $connMock->expects($this->at($index))->method('fetchAssoc')->willReturn(['status' => 1]);
+        }
+
+        foreach($rowResultSets as $index2=>$rowResultSet) {
+            $connMock->expects($this->at($index + $index2 + 1))->method('fetchAssoc')->willReturn($rowResultSet);
+        }
+
+        $queueMock->expects($this->once())->method('bury');
+        $eventMock->expects($this->once())->method('stopPropagation');
+
+        $this->listener->onPostponeJobCheck($eventMock);
+    }}
