@@ -4,7 +4,7 @@ namespace BsbPostponableJobStrategy;
 
 use Zend\ModuleManager\Feature;
 
-class Module implements Feature\ConfigProviderInterface, Feature\DependencyIndicatorInterface
+final class Module implements Feature\ConfigProviderInterface, Feature\DependencyIndicatorInterface
 {
     /**
      * @inheritdoc

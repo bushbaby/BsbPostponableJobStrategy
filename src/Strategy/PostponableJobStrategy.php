@@ -111,8 +111,11 @@ class PostponableJobStrategy extends AbstractStrategy
                 $queue->bury(
                     $job,
                     [
-                        'message' => sprintf('This postponed job has been buried because it depends on the execution ' .
-                            'of a job (%s) that has been buried', $postponeUntilId)
+                        'message' => sprintf(
+                            'This postponed job has been buried because it depends on the execution ' .
+                            'of a job (%s) that has been buried',
+                            $postponeUntilId
+                        )
                     ]
                 );
                 $event->stopPropagation();

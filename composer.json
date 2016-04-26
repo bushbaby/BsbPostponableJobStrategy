@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "slm/queue-doctrine": "~0.4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2.0",
         "zendframework/zendframework": "~2.0",
-        "phpunit/phpunit": "~5.1"
+        "phpunit/phpunit": "~4.8|~5.1"
     },
     "autoload": {
         "psr-4": {

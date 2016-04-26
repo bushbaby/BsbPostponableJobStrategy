@@ -9,7 +9,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * BsbPostponableJobStrategyFactory
  */
-class PostponableJobStrategyFactory implements FactoryInterface
+final class PostponableJobStrategyFactory implements FactoryInterface
 {
     protected $options;
 
